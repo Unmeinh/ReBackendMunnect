@@ -2,6 +2,11 @@ var baiVietModel = require('../models/BaiViet');
 
 exports.list = async (req, res, next) => {
   var reqFilter = null;
+  var values = req.query;
+
+  if (typeof (values.idNguoiDung) != 'undefined') {
+    reqFilter = { idNguoiDung: values.idNguoiDung };
+  } 
 
   try {
     let listBaiViet = await baiVietModel.find(reqFilter).populate('idNguoiDung');

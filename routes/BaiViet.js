@@ -1,12 +1,14 @@
 var express = require('express');
 var router = express.Router();
+const multer  = require('multer');
+const uploader = multer({dest: './public/temp'});
 var baiVietCtrl = require('../controllers/BaiViet');
 
 router.get('/DanhSach', baiVietCtrl.list);
 
-router.post('/ThemBaiViet', baiVietCtrl.add);
+router.post('/ThemBaiViet', uploader.single('anhBaiViet'), baiVietCtrl.add);
 
-router.put('/SuaBaiViet/:idBaiViet', baiVietCtrl.update);
+router.put('/SuaBaiViet/:idBaiViet', uploader.single('anhBaiViet'), baiVietCtrl.update);
 
 // router.get('/XoaBaiViet/:idBaiViet', baiVietCtrl.delete);
 

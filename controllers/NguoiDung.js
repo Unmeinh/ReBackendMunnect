@@ -3,9 +3,17 @@ var nguoiDungModel = require('../models/NguoiDung');
 
 exports.list = async (req, res, next) => {
   var reqFilter = null;
+  var reqSearch = null;
+  var values = req.query;
+
+  if (typeof (values.inputSearch) != 'undefined') {
+    var inputValue = values.inputSearch;
+    var inputRegex = new RegExp(inputValue);
+    reqSearch = { tenTaiKhoan: inputRegex };
+  }
 
   try {
-    let listNguoiDung = await nguoiDungModel.find(reqFilter);
+    let listNguoiDung = await nguoiDungModel.find(reqFilter).find(reqSearch);
 
     return res.status(200).json({
       success: true,

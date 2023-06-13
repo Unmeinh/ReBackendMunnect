@@ -3,14 +3,21 @@ var baiVietModel = require('../models/BaiViet');
 
 exports.list = async (req, res, next) => {
   var reqFilter = null;
+  var reqSearch = null;
   var values = req.query;
 
   if (typeof (values.idNguoiDung) != 'undefined') {
     reqFilter = { idNguoiDung: values.idNguoiDung };
   }
 
+  if (typeof (values.inputSearch) != 'undefined') {
+    var inputValue = values.inputSearch;
+    var inputRegex = new RegExp(inputValue);
+    reqSearch = { noiDung: inputRegex };
+  }
+
   try {
-    let listBaiViet = await baiVietModel.find(reqFilter).populate('idNguoiDung').sort({thoiGian: -1});
+    let listBaiViet = await baiVietModel.find(reqFilter).find(reqSearch).populate('idNguoiDung').sort({ thoiGian: -1 });
 
     return res.status(200).json({
       success: true,

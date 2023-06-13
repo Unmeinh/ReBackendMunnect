@@ -21,32 +21,72 @@ exports.list = async (req, res, next) => {
   }
 }
 
-exports.add = async (req, res, next) => {
+exports.login = async (req, res, next) => {
+  if (req.method == 'POST') {
+    var inputEmail = req.query.inputEmail;
+    console.log(inputEmail);
+    var body = req.body;
+
+    try {
+      let listNguoiDung = await nguoiDungModel.find({ email: inputEmail });
+      console.log(req.body);
+
+      if (listNguoiDung.length == 1) {
+        var nguoiDung = listNguoiDung[0];
+        if (nguoiDung.matKhau == body.matKhau) {
+          return res.status(200).json({
+            success: true,
+            message: "Đăng nhập thành công",
+            objData: nguoiDung
+          });
+        } else {
+          return res.status(200).json({
+            success: false,
+            message: "Sai mật khẩu! Vui lòng thử lại."
+          });
+        }
+      } else {
+        return res.status(200).json({
+          success: false,
+          message: "Không tìm thấy tài khoản hoặc cơ sở dữ liệu bị trùng lặp.",
+        });
+      }
+
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+}
+
+exports.register = async (req, res, next) => {
   if (req.method == 'POST') {
     var body = req.body;
-    var objData = fillObj(body);
+    console.log(body);
+    var objData = new nguoiDungModel();
+    objData.tenTaiKhoan = body.tenTaiKhoan;
+    objData.email = body.email;
+    objData.matKhau = body.matKhau;
+    objData.sinhNhat = body.sinhNhat;
+    objData.anhDaiDien = "https://backend-munnect.herokuapp.com/uploads/iconEarth.png";
+    objData.anhBia = "https://backend-munnect.herokuapp.com/uploads/worldWallpaper.jpg";
 
-    console.log(req.body);
-    if (req.file != undefined) {
-      fs.renameSync(req.file.path, './public/uploads/' + req.file.originalname);
-      let imagePath = 'http://192.168.191.7:3000/uploads/' + req.file.originalname;
-      console.log('/uploads/' + req.file.originalname);
-      objData.anhBaiViet = imagePath;
-    }
-
-    console.log(objData);
     if (objData != {}) {
       try {
         await objData.save();
         return res.status(201).json({
           success: true,
-          data: {},
+          message: "Đăng ký thành công!",
         });
       } catch (error) {
         console.log(error.message);
+        var errRegex = new RegExp('^E11000+.');
         return res.status(500).json({
           success: false,
-          message: error.message,
+          message: (error.message.match(errRegex)) ? 'Email đã tồn tại trong cơ sở dữ liệu!' : error.message,
         });
       }
     }
@@ -66,7 +106,7 @@ exports.updateData = async (req, res, next) => {
         if (file != {}) {
           fs.renameSync(file.path, './public/uploads/' + file.originalname);
           let imagePath = 'https://backend-munnect.herokuapp.com/uploads/' + file.originalname;
-          if (typeof(body.solo) != 'undefined') {
+          if (typeof (body.solo) != 'undefined') {
             if (body.solo == 'avatar') {
               objData.anhDaiDien = imagePath;
             }

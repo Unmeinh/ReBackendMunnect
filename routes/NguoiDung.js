@@ -6,9 +6,9 @@ var nguoiDungCtrl = require('../controllers/NguoiDung');
 
 router.get('/DanhSach', nguoiDungCtrl.list);
 
-// router.post('/DangNhap', nguoiDungCtrl.add);
+router.post('/DangNhap', nguoiDungCtrl.login);
 
-router.post('/DangKy', nguoiDungCtrl.add);
+router.post('/DangKy', nguoiDungCtrl.register);
 
 router.put('/SuaNguoiDung/:idNguoiDung', uploader.array('anhTaiLen', 2), nguoiDungCtrl.updateData);
 

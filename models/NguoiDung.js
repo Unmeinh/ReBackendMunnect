@@ -3,7 +3,12 @@ var db = require('../Modules/db');
 const NguoiDungSchema = new db.mongoose.Schema(
   {
     tenTaiKhoan: { type: String, required: true, },
-    email: { type: String, required: true, },
+    email: {
+      type: String, required: true, index: {
+        unique: true,
+        dropDups: true
+      }
+    },
     matKhau: { type: String, required: true, },
     sdt: { type: Number, required: false, },
     gioiThieu: { type: String, required: false, },

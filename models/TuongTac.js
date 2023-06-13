@@ -13,7 +13,7 @@ const TuongTacSchema = new db.mongoose.Schema(
       required: true,
     },
     loaiTuongTac: { type: String, required: true, },
-    trangThai: { type: String, required: true, },
+    trangThai: { type: String, required: false, },
   },
   { collection: "Tuong_Tac" }
 );

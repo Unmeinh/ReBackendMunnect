@@ -6,6 +6,10 @@ exports.list = async (req, res, next) => {
   var reqSearch = null;
   var values = req.query;
 
+  if (typeof (values.inputID) != 'undefined') {
+    reqFilter = { _id: values.inputID };
+  }
+
   if (typeof (values.inputSearch) != 'undefined') {
     var inputValue = values.inputSearch;
     var inputRegex = new RegExp(inputValue);
@@ -14,7 +18,6 @@ exports.list = async (req, res, next) => {
 
   try {
     let listNguoiDung = await nguoiDungModel.find(reqFilter).find(reqSearch);
-
     return res.status(200).json({
       success: true,
       data: {
@@ -73,7 +76,6 @@ exports.login = async (req, res, next) => {
 exports.register = async (req, res, next) => {
   if (req.method == 'POST') {
     var body = req.body;
-    console.log(body);
     var objData = new nguoiDungModel();
     objData.tenTaiKhoan = body.tenTaiKhoan;
     objData.email = body.email;

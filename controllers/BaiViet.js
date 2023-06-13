@@ -18,7 +18,6 @@ exports.list = async (req, res, next) => {
 
   try {
     let listBaiViet = await baiVietModel.find(reqFilter).find(reqSearch).populate('idNguoiDung').sort({ thoiGian: -1 });
-
     return res.status(200).json({
       success: true,
       data: {

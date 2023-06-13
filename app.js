@@ -7,7 +7,7 @@ var logger = require('morgan');
 var baiVietRouter = require('./routes/BaiViet');
 var nguoiDungRouter = require('./routes/NguoiDung');
 // var binhLuanRouter = require('./routes/BinhLuan');
-// var tuongTacRouter = require('./routes/TuongTac');
+var tuongTacRouter = require('./routes/TuongTac');
 // var theoDoiRouter = require('./routes/TheoDoi');
 // var thongBaoRouter = require('./routes/ThongBao');
 
@@ -27,7 +27,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/BaiViet', baiVietRouter);
 app.use('/NguoiDung', nguoiDungRouter);
 // app.use('/BinhLuan', binhLuanRouter);
-// app.use('/TuongTac', tuongTacRouter);
+app.use('/BaiViet/TuongTac', tuongTacRouter);
 // app.use('/TheoDoi', theoDoiRouter);
 // app.use('/ThongBao', thongBaoRouter);
 

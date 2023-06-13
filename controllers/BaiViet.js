@@ -35,7 +35,7 @@ exports.add = async (req, res, next) => {
     console.log(req.body);
     if (req.file != undefined) {
       fs.renameSync(req.file.path, './public/uploads/' + req.file.originalname);
-      let imagePath = '/uploads/' + req.file.originalname;
+      let imagePath = 'https://backend-munnect.herokuapp.com/uploads/' + req.file.originalname;
       console.log('/uploads/' + req.file.originalname);
       objData.anhBaiViet = imagePath;
     }

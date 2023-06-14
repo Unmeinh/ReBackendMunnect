@@ -7,6 +7,7 @@ exports.list = async (req, res, next) => {
   var values = req.query;
 
   if (typeof (values.inputID) != 'undefined') {
+    console.log(values.inputID);
     reqFilter = { _id: values.inputID };
   }
 

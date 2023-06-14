@@ -100,7 +100,6 @@ async function updatePost(values, body, objData) {
     objPost.arr_phanDoi.push(objData._id);
     if (objPost.arr_dongTinh.indexOf(objData._id) >= 0) {
       objPost.arr_dongTinh.splice(objPost.arr_dongTinh.indexOf(objData._id), 1);
-      await baiVietModel.findByIdAndUpdate(objPost._id, objPost);
     }
     await baiVietModel.findByIdAndUpdate(objPost._id, objPost);
   } else {

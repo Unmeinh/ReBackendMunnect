@@ -6,6 +6,8 @@ var baiVietCtrl = require('../controllers/BaiViet');
 
 router.get('/DanhSach', baiVietCtrl.list);
 
+router.get('/DanhSach/:idBV', baiVietCtrl.getOne);
+
 router.post('/ThemBaiViet', uploader.single('anhBaiViet'), baiVietCtrl.add);
 
 router.put('/SuaBaiViet/:idBaiViet', uploader.single('anhBaiViet'), baiVietCtrl.update);

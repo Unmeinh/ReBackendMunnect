@@ -6,9 +6,9 @@ var logger = require('morgan');
 
 var baiVietRouter = require('./routes/BaiViet');
 var nguoiDungRouter = require('./routes/NguoiDung');
-// var binhLuanRouter = require('./routes/BinhLuan');
+var binhLuanRouter = require('./routes/BinhLuan');
 var tuongTacRouter = require('./routes/TuongTac');
-// var theoDoiRouter = require('./routes/TheoDoi');
+var theoDoiRouter = require('./routes/TheoDoi');
 // var thongBaoRouter = require('./routes/ThongBao');
 
 var app = express();
@@ -26,9 +26,9 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use('/BaiViet', baiVietRouter);
 app.use('/NguoiDung', nguoiDungRouter);
-// app.use('/BinhLuan', binhLuanRouter);
+app.use('/BaiViet/BinhLuan', binhLuanRouter);
 app.use('/BaiViet/TuongTac', tuongTacRouter);
-// app.use('/TheoDoi', theoDoiRouter);
+app.use('/NguoiDung/TheoDoi', theoDoiRouter);
 // app.use('/ThongBao', thongBaoRouter);
 
 // catch 404 and forward to error handler

@@ -33,6 +33,31 @@ exports.list = async (req, res, next) => {
   }
 }
 
+exports.getOne = async (req, res, next) => {
+  var reqFilter = null;
+  var values = req.params.idBV;
+
+  if (typeof (values) != 'undefined') {
+    reqFilter = { _id: values };
+  }
+
+  try {
+    let listBaiViet = await baiVietModel.find(reqFilter).populate('idNguoiDung');
+    return res.status(200).json({
+      success: true,
+      data: {
+        baiViet: listBaiViet[0],
+        // listTuongTac: listTuongTac,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
 exports.add = async (req, res, next) => {
   if (req.method == 'POST') {
     var body = req.body;

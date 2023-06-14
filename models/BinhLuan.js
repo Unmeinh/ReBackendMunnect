@@ -13,7 +13,7 @@ const BinhLuanSchema = new db.mongoose.Schema(
       required: true,
     },
     noiDung: { type: String, required: true, },
-    anhBinhLuan: { type: String, required: true, },
+    anhBinhLuan: { type: String, required: false, },
     thoiGian: { type: Date, required: true, },
     arr_BinhLuan: { type: Array, required: false, },
   },

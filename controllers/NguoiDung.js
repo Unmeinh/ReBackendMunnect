@@ -104,7 +104,7 @@ exports.register = async (req, res, next) => {
   }
 }
 
-exports.updateData = async (req, res, next) => {
+exports.updateImage = async (req, res, next) => {
   if (req.method == 'PUT') {
     var body = req.body;
     var objID = req.params.idNguoiDung;
@@ -151,6 +151,39 @@ exports.updateData = async (req, res, next) => {
       }
     }
   }
+}
+
+exports.updateArrBV = async (req, res, next) => {
+  var idNguoiDung = req.params.idNguoiDung;
+  var idBV = req.query.idBV;
+
+  if (typeof (idBV) != 'undefined' && typeof (idNguoiDung) != 'undefined') {
+
+    try {
+      let listNguoiDung = await nguoiDungModel.find({ _id: idNguoiDung });
+
+      if (listNguoiDung.length > 0) {
+        var objData = fillObj(listNguoiDung[0]);
+        objData._id = idNguoiDung;
+        objData.arr_BaiViet.push(idBV);
+        console.log(objData);
+
+        await nguoiDungModel.findByIdAndUpdate(idNguoiDung, objData);
+        return res.status(200).json({
+          success: true,
+          data: {
+            listNguoiDung: listNguoiDung,
+          },
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+
 }
 
 function fillObj(body) {

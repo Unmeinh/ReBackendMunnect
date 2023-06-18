@@ -8,7 +8,9 @@ router.get('/DanhSach', baiVietCtrl.list);
 
 router.get('/DanhSach/:idBV', baiVietCtrl.getOne);
 
-router.post('/ThemBaiViet', uploader.single('anhBaiViet'), baiVietCtrl.add);
+router.get('/DanhSach/NguoiDung/:idND',  baiVietCtrl.getLatest);
+
+router.post('/BaiVietMoi', uploader.single('anhBaiViet'), baiVietCtrl.add);
 
 router.put('/SuaBaiViet/:idBaiViet', uploader.single('anhBaiViet'), baiVietCtrl.update);
 

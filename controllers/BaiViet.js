@@ -58,12 +58,47 @@ exports.getOne = async (req, res, next) => {
   }
 }
 
+exports.getLatest = async (req, res, next) => {
+  var reqFilter = null;
+  var values = req.params.idND;
+
+  if (typeof (values) != 'undefined') {
+    reqFilter = { idNguoiDung: values };
+  }
+
+  try {
+    let listBaiViet = await baiVietModel.find(reqFilter).populate('idNguoiDung').sort({ thoiGian: -1 });
+    if (listBaiViet.length > 0) {
+      console.log(listBaiViet.length);
+      return res.status(200).json({
+        success: true,
+        data: {
+          listBaiViet: listBaiViet,
+          // listTuongTac: listTuongTac,
+        },
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        data: {
+          listBaiViet: [],
+          // listTuongTac: listTuongTac,
+        },
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
 exports.add = async (req, res, next) => {
   if (req.method == 'POST') {
     var body = req.body;
     var objData = fillObj(body);
 
-    console.log(req.body);
     if (req.file != undefined) {
       fs.renameSync(req.file.path, './public/uploads/' + req.file.originalname);
       let imagePath = 'https://backend-munnect.herokuapp.com/uploads/' + req.file.originalname;
@@ -71,13 +106,14 @@ exports.add = async (req, res, next) => {
       objData.anhBaiViet = imagePath;
     }
 
-    console.log(objData);
     if (objData != {}) {
       try {
         await objData.save();
         return res.status(201).json({
           success: true,
-          data: {},
+          data: {
+            baiViet: objData
+          },
         });
       } catch (error) {
         console.log(error.message);

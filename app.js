@@ -9,7 +9,7 @@ var nguoiDungRouter = require('./routes/NguoiDung');
 var binhLuanRouter = require('./routes/BinhLuan');
 var tuongTacRouter = require('./routes/TuongTac');
 var theoDoiRouter = require('./routes/TheoDoi');
-// var thongBaoRouter = require('./routes/ThongBao');
+var thongBaoRouter = require('./routes/ThongBao');
 
 var app = express();
 
@@ -29,7 +29,7 @@ app.use('/NguoiDung', nguoiDungRouter);
 app.use('/BaiViet/BinhLuan', binhLuanRouter);
 app.use('/BaiViet/TuongTac', tuongTacRouter);
 app.use('/NguoiDung/TheoDoi', theoDoiRouter);
-// app.use('/ThongBao', thongBaoRouter);
+app.use('/ThongBao', thongBaoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

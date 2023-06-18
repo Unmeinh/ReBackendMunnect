@@ -6,7 +6,7 @@ var binhLuanCtrl = require('../controllers/BinhLuan');
 
 router.get('/DanhSach', binhLuanCtrl.list);
 
-router.post('/ThemBinhLuan', uploader.single('anhBinhLuan'), binhLuanCtrl.add);
+router.post('/BinhLuanMoi', uploader.single('anhBinhLuan'), binhLuanCtrl.add);
 
 // router.put('/SuaBinhLuan/:idBinhLuan', binhLuanCtrl.updateUser);
 

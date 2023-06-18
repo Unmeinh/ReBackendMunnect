@@ -1,5 +1,6 @@
 var fs = require('fs');
 var binhLuanModel = require('../models/BinhLuan');
+var baiVietModel = require('../models/BaiViet');
 
 exports.list = async (req, res, next) => {
   var reqFilter = null;
@@ -46,6 +47,12 @@ exports.add = async (req, res, next) => {
     if (objData != {}) {
       try {
         await objData.save();
+        var listBaiViet = await baiVietModel.find({_id: body.idBaiViet});
+        if (listBaiViet.length > 0) {
+          var objPost = listBaiViet[0];
+          objPost.arr_binhLuan.push(objData._id);
+          await baiVietModel.findByIdAndUpdate(objPost._id, objPost);
+        }
         return res.status(201).json({
           success: true,
           data: {},

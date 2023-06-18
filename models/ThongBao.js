@@ -12,9 +12,14 @@ const ThongBaoSchema = new db.mongoose.Schema(
       ref: "BaiViet",
       required: true,
     },
+    idChuBaiViet: {
+      type: db.mongoose.Schema.Types.ObjectId,
+      ref: "NguoiDung",
+      required: true,
+    },
+    tieuDeTB: { type: String, required: true, },
     noiDungTB: { type: String, required: true, },
     thoiGianTB: { type: Date, required: true, },
-    anhThongBao: { type: String, required: false, },
   },
   { collection: "Thong_Bao" }
 );

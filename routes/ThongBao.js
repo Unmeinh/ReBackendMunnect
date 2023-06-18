@@ -4,6 +4,6 @@ var thongBaoCtrl = require('../controllers/ThongBao');
 
 router.get('/DanhSach', thongBaoCtrl.list);
 
-router.post('/ThongBaoMoi', thongBaoCtrl.addUser);
+router.post('/ThongBaoMoi', thongBaoCtrl.add);
 
 module.exports = router;

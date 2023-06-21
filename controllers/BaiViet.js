@@ -1,5 +1,7 @@
 var fs = require('fs');
 var baiVietModel = require('../models/BaiViet');
+var tuongTacModel = require('../models/TuongTac');
+var binhLuanModel = require('../models/BinhLuan');
 
 exports.list = async (req, res, next) => {
   var reqFilter = null;
@@ -43,13 +45,21 @@ exports.getOne = async (req, res, next) => {
 
   try {
     let listBaiViet = await baiVietModel.find(reqFilter).populate('idNguoiDung');
-    return res.status(200).json({
-      success: true,
-      data: {
-        baiViet: listBaiViet[0],
-        // listTuongTac: listTuongTac,
-      },
-    });
+    if (listBaiViet.length > 0) {
+      return res.status(200).json({
+        success: true,
+        data: {
+          baiViet: listBaiViet[0],
+        },
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        data: {
+          baiViet: null,
+        },
+      });
+    }
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -74,7 +84,6 @@ exports.getLatest = async (req, res, next) => {
         success: true,
         data: {
           listBaiViet: listBaiViet,
-          // listTuongTac: listTuongTac,
         },
       });
     } else {
@@ -82,7 +91,6 @@ exports.getLatest = async (req, res, next) => {
         success: true,
         data: {
           listBaiViet: [],
-          // listTuongTac: listTuongTac,
         },
       });
     }
@@ -126,12 +134,70 @@ exports.add = async (req, res, next) => {
   }
 }
 
-exports.update = (req, res, next) => {
+exports.update = async (req, res, next) => {
+  if (req.method == 'PUT') {
+    var body = req.body;
+    var objData = fillObj(body);
+    objData._id = req.params.idBaiViet;
 
-  res.status(200).json({
-    success: true,
-    data: {},
-  });
+    if (req.file != undefined) {
+      fs.renameSync(req.file.path, './public/uploads/' + req.file.originalname);
+      let imagePath = 'https://backend-munnect.herokuapp.com/uploads/' + req.file.originalname;
+      console.log('/uploads/' + req.file.originalname);
+      objData.anhBaiViet = imagePath;
+    }
+
+    if (objData != {}) {
+      try {
+        await baiVietModel.findByIdAndUpdate(objData._id, objData);
+        return res.status(200).json({
+          success: true,
+          data: {
+            baiViet: objData
+          },
+        });
+      } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({
+          success: false,
+          message: error.message,
+        });
+      }
+    }
+  }
+}
+
+exports.delete = async (req, res, next) => {
+  if (req.method == 'DELETE') {
+    var objId = req.params.idBaiViet;
+
+    if (typeof (objId) != 'undefined') {
+      try {
+        await baiVietModel.findByIdAndDelete(objId);
+        let listBinhLuan = await binhLuanModel.find({idBaiViet: objId});
+        let listTuongTac = await tuongTacModel.find({idBaiViet: objId});
+        if (listBinhLuan.length > 0) {
+          for (let i = 0; i < listBinhLuan.length; i++) {
+            await binhLuanModel.findByIdAndDelete(listBinhLuan[i]._id);
+          }
+        }
+        if (listTuongTac.length > 0) {
+          for (let i = 0; i < listTuongTac.length; i++) {
+            await tuongTacModel.findByIdAndDelete(listTuongTac[i]._id);
+          }
+        }
+        return res.status(203).json({
+          success: true,
+        });
+      } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({
+          success: false,
+          message: error.message,
+        });
+      }
+    }
+  }
 }
 
 function fillObj(body) {

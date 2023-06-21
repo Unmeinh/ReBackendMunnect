@@ -104,6 +104,65 @@ exports.register = async (req, res, next) => {
   }
 }
 
+exports.updateInfo = async (req, res, next) => {
+  if (req.method == 'PUT') {
+    var objID = req.params.idNguoiDung;
+
+    if (objID != {}) {
+      try {
+        var objData = fillObj(req.body);
+        objData._id = objID;
+
+        await nguoiDungModel.findByIdAndUpdate(objID, objData);
+        return res.status(200).json({
+          success: true,
+          data: {},
+        });
+      } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({
+          success: false,
+          message: error.message,
+        });
+      }
+    }
+  }
+}
+
+exports.updatePass = async (req, res, next) => {
+  if (req.method == 'PUT') {
+    var objID = req.params.idNguoiDung;
+
+    if (objID != {}) {
+      try {
+        let listNguoiDung = await nguoiDungModel.find({_id: objID});
+
+        if (listNguoiDung[0].matKhau == req.query.matKhauCu) {
+          var objData = fillObj(req.body);
+          objData._id = objID;
+  
+          await nguoiDungModel.findByIdAndUpdate(objID, objData);
+          return res.status(200).json({
+            success: true,
+            data: {},
+          });
+        } else {
+          return res.status(200).json({
+            success: false,
+            data: {},
+          });
+        }
+      } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({
+          success: false,
+          message: error.message,
+        });
+      }
+    }
+  }
+}
+
 exports.updateImage = async (req, res, next) => {
   if (req.method == 'PUT') {
     var body = req.body;

@@ -14,6 +14,6 @@ router.post('/BaiVietMoi', uploader.single('anhBaiViet'), baiVietCtrl.add);
 
 router.put('/SuaBaiViet/:idBaiViet', uploader.single('anhBaiViet'), baiVietCtrl.update);
 
-// router.get('/XoaBaiViet/:idBaiViet', baiVietCtrl.delete);
+router.delete('/XoaBaiViet/:idBaiViet', baiVietCtrl.delete);
 
 module.exports = router;

@@ -10,7 +10,9 @@ router.post('/DangKy', nguoiDungCtrl.register);
 
 router.get('/DanhSach', nguoiDungCtrl.list);
 
-router.put('/CapNhatThongTin', nguoiDungCtrl.list);
+router.put('/CapNhatThongTin/:idNguoiDung', nguoiDungCtrl.updateInfo);
+
+router.put('/ThayDoiMatKhau/:idNguoiDung', nguoiDungCtrl.updatePass);
 
 router.get('/SuaArrBaiViet/:idNguoiDung', nguoiDungCtrl.updateArrBV);
 

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết bài viết</title>
+    <link rel="stylesheet" href="../../../bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container alert alert-secondary">
+        <div class="row col-6 m-auto bg-light">
+            <div class="row col p-4">
+                <img class="col-auto" src="<%= objBV.idNguoiDung.anhDaiDien%>" style="width: 120px;border-radius: 45%;">
+                <h3 class="col-auto">
+                    <%= objBV.idNguoiDung.tenTaiKhoan %>
+                </h3>
+            </div>
+            <span class="m-3">
+                <%= objBV.noiDung %>
+            </span>
+            <img class="m-auto" src="<%= objBV.anhBaiViet %>" style="width: 80%;">
+            <div class="row m-3 col">
+                <span class="col-auto">Like: <span style="font-weight: bold;">
+                        <%= objBV.arr_dongTinh.length %>
+                    </span> </span>
+                <span class="col-auto">Dislike: <span style="font-weight: bold;">
+                        <%= objBV.arr_phanDoi.length %>
+                    </span></span>
+                <span class="col-auto">Bình luận: <span style="font-weight: bold;">
+                        <%= objBV.arr_binhLuan.length %>
+                    </span></span>
+                <span class="col-auto">Chia sẻ: <span style="font-weight: bold;">
+                        <%= objBV.soLuongChiaSe %>
+                    </span></span>
+                <span class="col-auto">Báo cáo: <span style="font-weight: bold;">
+                        <%= objBV.soLuongBaoCao %>
+                    </span></span>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

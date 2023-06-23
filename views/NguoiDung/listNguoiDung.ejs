@@ -1,0 +1,119 @@
+<%- include('../inc/top.ejs',{title:'Danh Sách Người Dùng'}) %>
+    <form action="" method="get">
+        <div class="row p-2">
+            <!-- <div class="col">
+            <input type="text" name="" class="form-control" placeholder="search name" aria-label="First name">
+        </div> -->
+
+
+            <div class="col-auto">
+                <input type="text" class="form-control" placeholder="Nhập email">
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-secondary">Search</button>
+            </div>
+
+            <div class="dropdown col-auto">
+                <a class="btn btn-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-arrow-up-wide-short"></i>
+                </a>
+
+                <ul class="dropdown-menu">
+                   
+                    <li><a class="dropdown-item" href="http://localhost:3000/Admin/BaiViet/DanhSachTang">Thời gian</a> </li>
+
+                </ul>
+            </div>
+
+            <div class="dropdown col-auto">
+                <a class="btn btn-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-arrow-up-short-wide"></i>
+                </a>
+
+                <ul class="dropdown-menu">
+                  
+                    <li><a class="dropdown-item" href="http://localhost:3000/Admin/BaiViet/DanhSach">Thời gian</a> </li>
+
+                </ul>
+            </div>
+            
+        </div>
+
+    </form>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Tên tài khoản</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Giới thiệu</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Ảnh đại diện</th>
+
+                        <th scope="col">Hỗ trợ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% listNguoiDung.forEach((row)=>{ %>
+                        <tr>
+
+                            <td>
+                               <%= row.tenTaiKhoan %>
+                            </td>
+                            <td>
+                                <%= row.email %>
+                            </td>
+                            <td>
+                                <%= row.gioiThieu %>
+                            </td>
+                            <td>
+                                <%= row.sdt %>
+                            </td>
+                            <td>
+                                <% if(row.anhDaiDien!='undefined' ) { %>
+                                    <img src="<%= row.anhDaiDien %>" width="100px">
+                                    <% } else {%>
+                                        <span>Không có ảnh</span>
+                                        <% } %>
+
+                            </td>
+                            
+
+
+                            <td>
+                                <a href="/Admin/BaiViet/ChiTiet/<%= row._id %>"> <i
+                                        class="fa-solid fa-circle-info"></i></a>
+                                <a href="/Admin/BaiViet/XoaBaiViet/<%= row._id %>"><i
+                                        class="fa-solid fa-delete-left"></i></a>
+
+                            </td>
+                        </tr>
+
+                        <% }) %>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="display: flex;justify-content: center;">
+        <div class="col-9">
+            <p style="font-weight: bold;">Số bản ghi: <%= countFilter%>/<%= countAll %>
+            </p>
+        </div>
+        <div class="col-3">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+    <%- include('../inc/bottom.ejs') %>

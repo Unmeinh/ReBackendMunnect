@@ -3,14 +3,16 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+//api
 var baiVietRouter = require('./routes/BaiViet');
 var nguoiDungRouter = require('./routes/NguoiDung');
 var binhLuanRouter = require('./routes/BinhLuan');
 var tuongTacRouter = require('./routes/TuongTac');
 var theoDoiRouter = require('./routes/TheoDoi');
 var thongBaoRouter = require('./routes/ThongBao');
-
+//admin
+var baiVietRouterAdmin = require('./routes/admin/BaiViet');
+var nguoiDungRouterAdmin = require('./routes/admin/NguoiDung');
 var app = express();
 
 // view engine setup
@@ -23,14 +25,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
-
+//api
 app.use('/BaiViet', baiVietRouter);
 app.use('/NguoiDung', nguoiDungRouter);
 app.use('/BaiViet/BinhLuan', binhLuanRouter);
 app.use('/BaiViet/TuongTac', tuongTacRouter);
 app.use('/NguoiDung/TheoDoi', theoDoiRouter);
 app.use('/ThongBao', thongBaoRouter);
-
+//admin
+app.use('/Admin/BaiViet',baiVietRouterAdmin);
+app.use('/Admin/NguoiDung',nguoiDungRouterAdmin);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
